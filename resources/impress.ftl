@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>Impressive Mind Maps</title>
@@ -6,12 +6,13 @@
 		<link href="styles2.css" rel="stylesheet" /> 
 	</head>
 	<body>
+		<a href="index.html">Load mind map</a>
 		<div id="impress">
 			<div class="no-support-message">
 			Your browser doesn't support impress.js.  Try Chrome or Safari.
 			</div>
 <#list nodesInOrder as node>
-			<div id="${node.id}" class="druga step" data-x="${node.coordinates.x?c}" data-y="${node.coordinates.y?c}" data-z="${node.coordinates.z?c}" data-scale="${node.scale}" data-rotate-x="${node.rotation.x?c}"<#if node.parent??> data-parent="${node.parent.id}"</#if>>${node.content}</div>
+			<div id="${node.id}" class="druga step"<#if node.color??> style="background-color: ${node.color}"</#if> data-x="${node.coordinates.x?c}" data-y="${node.coordinates.y?c}" data-z="${node.coordinates.z?c}" data-scale="${node.scale}" data-rotate-x="${node.rotation.x?c}"<#if node.parent??> data-parent="${node.parent.id}"</#if>><div>${node.content}</div><#if node.content.image??><img src="${node.content.image.path}"></img></#if></div>
 </#list>  
 		</div>      
 		<script type="text/javascript" src="impress.js"></script>

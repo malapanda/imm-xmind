@@ -1,20 +1,23 @@
 package xmind.adapter;
 
 import freemarker.template.TemplateException;
-import impress.beans.MapNode;
-import impress.beans.MindMap;
-import impress.cases.SimpleCase;
-import impress.generator.MindMapGenerator;
+import imm.impress.beans.MapNode;
+import imm.impress.beans.MindMap;
+import imm.impress.cases.SimpleCase;
+import imm.impress.generator.MindMapGenerator;
+import imm.xmind.adapter.WorkbookLoader;
+import imm.xmind.algorithm.SimpleAlgorithm;
+import imm.xmind.beans.XmindWorkbook;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.xmind.core.CoreException;
 
-import xmind.algorithm.SimpleAlgorithm;
-import xmind.beans.Workbook;
 
 
 public class AlgorithmTest {
@@ -22,7 +25,7 @@ public class AlgorithmTest {
 	@Test
 	public void testAlgorithm() throws Exception {
 		File file = new File("resources/test_file.xmind");
-		Workbook workbook = new Workbook(WorkbookLoader.loadWorkbook(file));
+		XmindWorkbook workbook = new XmindWorkbook(WorkbookLoader.loadWorkbook(file));
 		SimpleAlgorithm simpleAlgorithm = new SimpleAlgorithm(workbook);
 		MindMap mindMap = simpleAlgorithm.generate();
 		for (MapNode node : mindMap.getNodesInOrder()) {
@@ -37,12 +40,32 @@ public class AlgorithmTest {
 	@Test
 	public void testSth() throws IOException, TemplateException, CoreException {
 		File file = new File("resources/test_file.xmind");
-		Workbook workbook = new Workbook(WorkbookLoader.loadWorkbook(file));
+		XmindWorkbook workbook = new XmindWorkbook(WorkbookLoader.loadWorkbook(file));
 		SimpleAlgorithm simpleAlgorithm = new SimpleAlgorithm(workbook);
 		MindMap mindMap = simpleAlgorithm.generate();
 		
 		MindMapGenerator generator = new MindMapGenerator("impress.ftl", templateFolder);		
 		
 		generator.generateToFile(new File("test.html"),mindMap);
+	}
+	
+	
+	@Test
+	public void testWithImages() throws IOException, TemplateException, CoreException {
+		File file = new File("resources/z_obrazkami.xmind");
+		String tempDirectoryPath = FileUtils.getTempDirectoryPath();
+		File tmpDir = new File(tempDirectoryPath,UUID.randomUUID().toString());
+		FileUtils.forceMkdir(tmpDir); 
+		System.out.println(tmpDir.getAbsolutePath());
+		
+		XmindWorkbook workbook = new XmindWorkbook(WorkbookLoader.loadWorkbookToDir(file, tmpDir));
+		SimpleAlgorithm simpleAlgorithm = new SimpleAlgorithm(workbook);
+		MindMap mindMap = simpleAlgorithm.generate();
+		
+		MindMapGenerator generator = new MindMapGenerator("impress.ftl", templateFolder);		
+		
+		generator.generateToFile(new File("test.html"),mindMap);
+		
+		FileUtils.deleteDirectory(tmpDir);
 	}
 }

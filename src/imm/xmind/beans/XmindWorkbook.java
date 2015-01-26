@@ -1,21 +1,21 @@
-package xmind.beans;
+package imm.xmind.beans;
 
 import org.xmind.core.ISheet;
 import org.xmind.core.IWorkbook;
 
-public class Workbook {
+public class XmindWorkbook {
 
 	private String titleText;
 	
-	private Topic rootTopic;
+	private XmindTopic rootTopic;
 	
-	public Workbook(IWorkbook workbook) {
+	public XmindWorkbook(IWorkbook workbook) {
 		ISheet primarySheet = workbook.getPrimarySheet();
-		rootTopic = new Topic(primarySheet.getRootTopic());
+		rootTopic = new XmindTopic(primarySheet.getRootTopic());
 		titleText = primarySheet.getTitleText();
 	}
 	
-	public Topic getRootTopic() {
+	public XmindTopic getRootTopic() {
 		return rootTopic;
 	}
 	

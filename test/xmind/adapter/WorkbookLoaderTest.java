@@ -1,5 +1,8 @@
 package xmind.adapter;
 
+import imm.xmind.adapter.WorkbookLoader;
+import imm.xmind.beans.XmindWorkbook;
+
 import java.io.File;
 
 import junit.framework.Assert;
@@ -7,7 +10,6 @@ import junit.framework.Assert;
 import org.junit.Test;
 import org.xmind.core.IWorkbook;
 
-import xmind.beans.Workbook;
 
 
 public class WorkbookLoaderTest {
@@ -18,7 +20,8 @@ public class WorkbookLoaderTest {
 		IWorkbook workbook = WorkbookLoader.loadWorkbook(file);
 		Assert.assertEquals("KOKOKOKO", workbook.getPrimarySheet().getRootTopic().getTitleText());
 		
-		Workbook workbook2 = new Workbook(workbook);
+		XmindWorkbook workbook2 = new XmindWorkbook(workbook);
 		workbook2.getRootTopic();
 	}
+	
 }
