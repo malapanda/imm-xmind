@@ -68,4 +68,14 @@ public class AlgorithmTest {
 		
 		FileUtils.deleteDirectory(tmpDir);
 	}
+	
+	@Test
+	public void testWithNotes() throws IOException, TemplateException, CoreException {
+		File file = new File("resources/z_notatkami.xmind");		
+		XmindWorkbook workbook = new XmindWorkbook(WorkbookLoader.loadWorkbook(file));
+		SimpleAlgorithm simpleAlgorithm = new SimpleAlgorithm(workbook);
+		MindMap mindMap = simpleAlgorithm.generate();
+		MindMapGenerator generator = new MindMapGenerator("impress.ftl", templateFolder);		
+		generator.generateToFile(new File("test.html"),mindMap);
+	}
 }

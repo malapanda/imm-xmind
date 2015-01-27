@@ -7,6 +7,7 @@ public class TopicContent extends Content {
 
 	public TopicContent(XmindTopic topic, Configuration config) {
 		super(topic.getTitleText(),
+				topic.getNotes(),
 				(topic.getImage() == null ? 
 						null : 
 						new PrefixedImage(topic.getImage(), config.imagePrefix)));
