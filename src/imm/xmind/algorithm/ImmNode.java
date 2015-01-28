@@ -1,28 +1,27 @@
 package imm.xmind.algorithm;
 
-import java.awt.Color;
-
 import imm.impress.beans.Coordinates;
 import imm.impress.beans.MapNode;
 import imm.impress.beans.NodeColor;
-import imm.impress.beans.Scale;
 import imm.impress.beans.SimpleNode;
 import imm.xmind.beans.XmindTopic;
 
-public class TopicNode extends SimpleNode {
+import java.awt.Color;
+
+public class ImmNode extends SimpleNode {
 	
 	private static int treeDepth = 0;
 	
 	private Integer level;
-	private Configuration config;
+	private ImmConfiguration config;
 
-	public TopicNode(XmindTopic topic, Integer level, Configuration config) {
+	public ImmNode(XmindTopic topic, Integer level, ImmConfiguration config) {
 		super();
-		super.setContent(new TopicContent(topic, config));
+		super.setContent(new ImmNodeContent(topic, config));
 		this.level = level;
 		this.config = config;
 		for (XmindTopic subtopic : topic.getChildren()) {
-			super.addChild(new TopicNode(subtopic, level + 1, config));
+			super.addChild(new ImmNode(subtopic, level + 1, config));
 		}
 		if (level > treeDepth) {
 			treeDepth = level;
@@ -32,7 +31,7 @@ public class TopicNode extends SimpleNode {
 	void computeColor(Color baseColor) {
 		this.setColor(new NodeColor(color(baseColor)));
 		for (MapNode child : getChildren()) {
-			TopicNode node = (TopicNode)child;
+			ImmNode node = (ImmNode)child;
 			node.computeColor(baseColor);
 		}
 	}
@@ -56,7 +55,7 @@ public class TopicNode extends SimpleNode {
 		} else {
 			int sum = position;
 			for (MapNode child : getChildren()) {
-				TopicNode node = (TopicNode)child;
+				ImmNode node = (ImmNode)child;
 				sum += node.computeCoordinates(sum);
 			}
 			int leaves = sum - position; 

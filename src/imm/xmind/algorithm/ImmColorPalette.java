@@ -4,13 +4,13 @@ import java.awt.Color;
 import java.util.Iterator;
 import java.util.List;
 
-public class ColorPalette {
+public class ImmColorPalette {
 
 	private List<Color> colorList;
 
 	private Iterator<Color> iterator;
 	
-	public ColorPalette(List<Color> colorList) {
+	public ImmColorPalette(List<Color> colorList) {
 		this.colorList = colorList;
 		this.iterator = this.colorList.iterator();
 	}

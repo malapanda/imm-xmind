@@ -3,22 +3,18 @@ package xmind.adapter;
 import freemarker.template.TemplateException;
 import imm.impress.beans.MapNode;
 import imm.impress.beans.MindMap;
-import imm.impress.cases.SimpleCase;
 import imm.impress.generator.MindMapGenerator;
 import imm.xmind.adapter.WorkbookLoader;
-import imm.xmind.algorithm.SimpleAlgorithm;
+import imm.xmind.algorithm.ImmAlgorithm;
 import imm.xmind.beans.XmindWorkbook;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.xmind.core.CoreException;
-
-
 
 public class AlgorithmTest {
 
@@ -26,13 +22,11 @@ public class AlgorithmTest {
 	public void testAlgorithm() throws Exception {
 		File file = new File("resources/test_file.xmind");
 		XmindWorkbook workbook = new XmindWorkbook(WorkbookLoader.loadWorkbook(file));
-		SimpleAlgorithm simpleAlgorithm = new SimpleAlgorithm(workbook);
+		ImmAlgorithm simpleAlgorithm = new ImmAlgorithm(workbook);
 		MindMap mindMap = simpleAlgorithm.generate();
 		for (MapNode node : mindMap.getNodesInOrder()) {
 			System.out.println(node.toString());
 		}
-		
-		
 	}
 	
 	File templateFolder  = new File("resources");
@@ -41,7 +35,7 @@ public class AlgorithmTest {
 	public void testSth() throws IOException, TemplateException, CoreException {
 		File file = new File("resources/test_file.xmind");
 		XmindWorkbook workbook = new XmindWorkbook(WorkbookLoader.loadWorkbook(file));
-		SimpleAlgorithm simpleAlgorithm = new SimpleAlgorithm(workbook);
+		ImmAlgorithm simpleAlgorithm = new ImmAlgorithm(workbook);
 		MindMap mindMap = simpleAlgorithm.generate();
 		
 		MindMapGenerator generator = new MindMapGenerator("impress.ftl", templateFolder);		
@@ -59,7 +53,7 @@ public class AlgorithmTest {
 		System.out.println(tmpDir.getAbsolutePath());
 		
 		XmindWorkbook workbook = new XmindWorkbook(WorkbookLoader.loadWorkbookToDir(file, tmpDir));
-		SimpleAlgorithm simpleAlgorithm = new SimpleAlgorithm(workbook);
+		ImmAlgorithm simpleAlgorithm = new ImmAlgorithm(workbook);
 		MindMap mindMap = simpleAlgorithm.generate();
 		
 		MindMapGenerator generator = new MindMapGenerator("impress.ftl", templateFolder);		
@@ -73,7 +67,7 @@ public class AlgorithmTest {
 	public void testWithNotes() throws IOException, TemplateException, CoreException {
 		File file = new File("resources/z_notatkami.xmind");		
 		XmindWorkbook workbook = new XmindWorkbook(WorkbookLoader.loadWorkbook(file));
-		SimpleAlgorithm simpleAlgorithm = new SimpleAlgorithm(workbook);
+		ImmAlgorithm simpleAlgorithm = new ImmAlgorithm(workbook);
 		MindMap mindMap = simpleAlgorithm.generate();
 		MindMapGenerator generator = new MindMapGenerator("impress.ftl", templateFolder);		
 		generator.generateToFile(new File("test.html"),mindMap);
